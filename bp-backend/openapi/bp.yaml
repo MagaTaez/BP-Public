@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: BP - ARTEM API
+  description: BP - ARTEM API
+  termsOfService: http://bp-inventory-manager.io/terms/
+  contact:
+    email: apiteam@bp-inventory-manager.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://api.bp-inventory-manager.io/v1
+tags:
+  - name: ingredients
+    description: API related to ingredients
+paths:
+  /ingredients:
+    put:
+      tags:
+        - ingredients
+      summary: Update an existing ingredient
+      description: Update an existing ingredient by Id
+      operationId: updateIngredient
+      requestBody:
+        description: ingredient
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ingredient'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ingredient not found
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - ingredients
+      summary: Add a new ingredient to the inventory
+      description: Add a new ingredient to the inventory
+      operationId: addIngredient
+      requestBody:
+        description: ingredient
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ingredient'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+    get:
+      tags:
+        - ingredients
+      summary: Get all ingredients
+      description: Get all ingredients
+      operationId: getAllIngredients
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ingredient'
+        '400':
+          description: Invalid status value
+  /ingredients/{ingredientId}:
+    get:
+      tags:
+        - ingredients
+      summary: Find ingredient by ID
+      description: Returns a single ingredient
+      operationId: getIngredientById
+      parameters:
+        - name: ingredientId
+          in: path
+          description: ID of ingredient to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ingredient'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ingredient not found
+
+
+components:
+  schemas:
+    Ingredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "My Ingredient"
+        description:
+          type: string
+          example: "My Ingredient Description"
+        stock:
+          type: integer
+        unitsOfMeasure:
+          type: string
+          enum:
+            - kg
+            - g
+            - piece
