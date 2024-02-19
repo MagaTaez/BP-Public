@@ -16,32 +16,6 @@ tags:
     description: API related to ingredients
 paths:
   /ingredients:
-    put:
-      tags:
-        - ingredients
-      summary: Update an existing ingredient
-      description: Update an existing ingredient by Id
-      operationId: updateIngredient
-      requestBody:
-        description: ingredient
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Ingredient'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Ingredient'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Ingredient not found
-        '422':
-          description: Validation exception
     post:
       tags:
         - ingredients
@@ -53,7 +27,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Ingredient'
+              $ref: '#/components/schemas/IngredientDTO'
         required: true
       responses:
         '200':
@@ -61,7 +35,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Ingredient'
+                $ref: '#/components/schemas/IngredientDTO'
         '400':
           description: Invalid input
         '422':
@@ -80,7 +54,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Ingredient'
+                  $ref: '#/components/schemas/IngredientDTO'
         '400':
           description: Invalid status value
   /ingredients/{ingredientId}:
@@ -104,16 +78,66 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Ingredient'
+                $ref: '#/components/schemas/IngredientDTO'
         '400':
           description: Invalid ID supplied
         '404':
           description: Ingredient not found
+    put:
+      tags:
+        - ingredients
+      summary: Update an existing ingredient
+      description: Update an existing ingredient by Id
+      operationId: updateIngredient
+      parameters:
+        - name: ingredientId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: ingredient
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ingredient not found
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - ingredients
+      summary: Deletes an ingredient
+      description: Deletes an ingredient
+      operationId: deleteIngredient
+      parameters:
+        - name: ingredientId
+          in: path
+          description: Ingredient id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
 
 
 components:
   schemas:
-    Ingredient:
+    IngredientDTO:
       type: object
       properties:
         id:
@@ -127,10 +151,11 @@ components:
           type: string
           example: "My Ingredient Description"
         stock:
-          type: integer
+          type: number
         unitsOfMeasure:
           type: string
           enum:
-            - kg
-            - g
-            - piece
+            - KG
+            - G
+            - PIECE
+            - ML
