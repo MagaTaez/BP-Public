@@ -6,11 +6,12 @@ import cz.vse.java.ploa00.bpbackend.service.IngredientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
-@Service
+@RestController
 @AllArgsConstructor
 public class IngredientsApiDelegateImpl implements IngredientsApiDelegate {
 
