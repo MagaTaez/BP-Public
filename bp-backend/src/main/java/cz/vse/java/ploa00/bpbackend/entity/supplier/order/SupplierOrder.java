@@ -35,11 +35,11 @@ public class SupplierOrder {
 
     /* Relations */
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplierOrder")
+    @OneToMany(mappedBy = "supplierOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SupplierOrderLine> supplierOrderLines;
 
     @Override

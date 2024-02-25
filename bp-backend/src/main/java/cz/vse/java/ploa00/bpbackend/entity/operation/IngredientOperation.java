@@ -29,19 +29,14 @@ public class IngredientOperation {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "operation_type", nullable = false)
-    private OperationType operationType;
+    private String operationType;
 
     @Column(nullable = false)
     private BigDecimal quantity;
 
-    public enum OperationType {
-        PURCHASE,
-        SALE
-    }
-
     /* Relations */
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;
 
@@ -50,7 +45,7 @@ public class IngredientOperation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IngredientOperation that = (IngredientOperation) o;
-        return Objects.equals(id, that.id) && Objects.equals(operationDate, that.operationDate) && operationType == that.operationType && Objects.equals(quantity, that.quantity);
+        return Objects.equals(id, that.id) && Objects.equals(operationDate, that.operationDate) && Objects.equals(operationType, that.operationType) && Objects.equals(quantity, that.quantity);
     }
 
     @Override

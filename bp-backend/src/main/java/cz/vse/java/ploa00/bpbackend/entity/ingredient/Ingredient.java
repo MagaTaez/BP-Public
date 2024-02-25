@@ -1,19 +1,13 @@
 package cz.vse.java.ploa00.bpbackend.entity.ingredient;
 
-import cz.vse.java.ploa00.bpbackend.entity.operation.IngredientOperation;
-import cz.vse.java.ploa00.bpbackend.entity.qrmodel.QrModel;
-import cz.vse.java.ploa00.bpbackend.entity.recipe.ProductIngredient;
-import cz.vse.java.ploa00.bpbackend.entity.supplier.order.SupplierOrderLine;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -39,20 +33,6 @@ public class Ingredient {
 
     @Column(precision = 10, scale = 2)
     private BigDecimal stock;
-
-    /* Relations */
-
-    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProductIngredient> productIngredients;
-
-    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SupplierOrderLine> supplierOrderLines;
-
-    @OneToOne(mappedBy = "ingredient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private QrModel qrModel;
-
-    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<IngredientOperation> operations;
 
     @Override
     public boolean equals(Object o) {
