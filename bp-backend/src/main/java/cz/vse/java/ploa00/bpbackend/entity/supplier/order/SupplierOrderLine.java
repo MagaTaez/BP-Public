@@ -29,12 +29,7 @@ public class SupplierOrderLine {
 
     /* Relations */
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("supplierOrderId")
-    @JoinColumn(name = "supplier_order_id")
-    private SupplierOrder supplierOrder;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
@@ -44,12 +39,12 @@ public class SupplierOrderLine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SupplierOrderLine that = (SupplierOrderLine) o;
-        return Objects.equals(supplierOrderLineCompositeKey, that.supplierOrderLineCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(purchasePrice, that.purchasePrice) && Objects.equals(supplierOrder, that.supplierOrder) && Objects.equals(ingredient, that.ingredient);
+        return Objects.equals(supplierOrderLineCompositeKey, that.supplierOrderLineCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(purchasePrice, that.purchasePrice) &&  Objects.equals(ingredient, that.ingredient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(supplierOrderLineCompositeKey, quantity, purchasePrice, supplierOrder, ingredient);
+        return Objects.hash(supplierOrderLineCompositeKey, quantity, purchasePrice, ingredient);
     }
 
     @Override
@@ -58,7 +53,7 @@ public class SupplierOrderLine {
                 "supplierOrderLineCompositeKey=" + supplierOrderLineCompositeKey +
                 ", quantity=" + quantity +
                 ", purchasePrice=" + purchasePrice +
-                ", supplierOrder=" + supplierOrder +
+                ", supplierOrder="  +
                 ", ingredient=" + ingredient +
                 '}';
     }

@@ -28,12 +28,7 @@ public class CustomerOrderLine {
 
     /* Relations */
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("customerOrderId")
-    @JoinColumn(name = "customer_order_id")
-    private CustomerOrder customerOrder;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
@@ -45,12 +40,12 @@ public class CustomerOrderLine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CustomerOrderLine that = (CustomerOrderLine) o;
-        return Objects.equals(customerOrderLineCompositeKey, that.customerOrderLineCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(sellPrice, that.sellPrice) && Objects.equals(customerOrder, that.customerOrder) && Objects.equals(product, that.product);
+        return Objects.equals(customerOrderLineCompositeKey, that.customerOrderLineCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(sellPrice, that.sellPrice) && Objects.equals(product, that.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerOrderLineCompositeKey, quantity, sellPrice, customerOrder, product);
+        return Objects.hash(customerOrderLineCompositeKey, quantity, sellPrice, product);
     }
 
     @Override
@@ -59,7 +54,6 @@ public class CustomerOrderLine {
                 "customerOrderLineCompositeKey=" + customerOrderLineCompositeKey +
                 ", quantity=" + quantity +
                 ", sellPrice=" + sellPrice +
-                ", customerOrder=" + customerOrder +
                 ", product=" + product +
                 '}';
     }

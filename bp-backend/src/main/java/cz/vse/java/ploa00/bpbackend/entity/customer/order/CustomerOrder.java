@@ -32,11 +32,11 @@ public class CustomerOrder {
 
     /* Relations */
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customerOrder")
+    @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CustomerOrderLine> customerOrderLines;
 
     @Override

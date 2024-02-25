@@ -1,7 +1,6 @@
 package cz.vse.java.ploa00.bpbackend.entity.recipe;
 
 import cz.vse.java.ploa00.bpbackend.entity.ingredient.Ingredient;
-import cz.vse.java.ploa00.bpbackend.entity.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,12 +26,7 @@ public class ProductIngredient {
 
     /* Relations */
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
@@ -42,12 +36,12 @@ public class ProductIngredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductIngredient that = (ProductIngredient) o;
-        return Objects.equals(productIngredientCompositeKey, that.productIngredientCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(product, that.product) && Objects.equals(ingredient, that.ingredient);
+        return Objects.equals(productIngredientCompositeKey, that.productIngredientCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(ingredient, that.ingredient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productIngredientCompositeKey, quantity, product, ingredient);
+        return Objects.hash(productIngredientCompositeKey, quantity, ingredient);
     }
 
     @Override
@@ -55,7 +49,6 @@ public class ProductIngredient {
         return "ProductIngredient{" +
                 "productIngredientCompositeKey=" + productIngredientCompositeKey +
                 ", quantity=" + quantity +
-                ", product=" + product +
                 ", ingredient=" + ingredient +
                 '}';
     }
