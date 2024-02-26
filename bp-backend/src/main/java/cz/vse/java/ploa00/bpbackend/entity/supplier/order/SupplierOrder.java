@@ -39,7 +39,9 @@ public class SupplierOrder {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @OneToMany(mappedBy = "supplierOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "supplier_order_id")
+    @OrderColumn(name = "line_order")
     private List<SupplierOrderLine> supplierOrderLines;
 
     @Override

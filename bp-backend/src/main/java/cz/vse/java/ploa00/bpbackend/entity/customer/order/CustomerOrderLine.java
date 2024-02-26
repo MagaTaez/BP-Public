@@ -33,8 +33,6 @@ public class CustomerOrderLine {
     @JoinColumn(name = "product_id")
     private Product product;
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
