@@ -27,7 +27,6 @@ public class IngredientOperation {
     @Column(name = "operation_date", nullable = false)
     private LocalDateTime operationDate;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "operation_type", nullable = false)
     private String operationType;
 

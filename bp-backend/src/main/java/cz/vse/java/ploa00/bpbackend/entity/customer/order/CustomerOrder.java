@@ -36,7 +36,9 @@ public class CustomerOrder {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "customer_order_id")
+    @OrderColumn(name = "line_order")
     private List<CustomerOrderLine> customerOrderLines;
 
     @Override

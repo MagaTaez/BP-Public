@@ -1,6 +1,5 @@
 package cz.vse.java.ploa00.bpbackend.entity.product;
 
-import cz.vse.java.ploa00.bpbackend.entity.customer.order.CustomerOrderLine;
 import cz.vse.java.ploa00.bpbackend.entity.recipe.ProductIngredient;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,11 +34,9 @@ public class Product {
 
     /* Relations */
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id")
     private Set<ProductIngredient> productIngredients;
-
-    @OneToMany(mappedBy = "product")
-    private List<CustomerOrderLine> customerOrderLines;
 
     @Override
     public boolean equals(Object o) {
