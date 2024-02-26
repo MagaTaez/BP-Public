@@ -14,6 +14,8 @@ servers:
 tags:
   - name: ingredients
     description: API related to ingredients
+  - name: suppliers
+    description: API related to suppliers
 paths:
   /ingredients:
     post:
@@ -133,7 +135,324 @@ paths:
       responses:
         '400':
           description: Invalid ID supplied
-
+  /suppliers:
+    get:
+      tags:
+        - suppliers
+      summary: Get all suppliers
+      description: Get all suppliers
+      operationId: getAllSuppliers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupplierDTO'
+        '400':
+          description: Invalid status value
+    post:
+      tags:
+        - suppliers
+      summary: Add a new supplier
+      description: Create a new supplier
+      operationId: addSupplier
+      requestBody:
+        description: supplier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierDTO'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /suppliers/{supplierId}:
+    get:
+      tags:
+        - suppliers
+      summary: Find supplier by ID
+      description: Returns a single supplier
+      operationId: getSupplierById
+      parameters:
+        - name: supplierId
+          in: path
+          description: ID of supplier to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Supplier not found
+    put:
+      tags:
+        - suppliers
+      summary: Update an existing supplier
+      description: Update an existing supplier by Id
+      operationId: updateSupplier
+      parameters:
+        - name: supplierId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: supplier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ingredient not found
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - suppliers
+      summary: Deletes an supplier
+      description: Deletes an supplier
+      operationId: deleteSupplier
+      parameters:
+        - name: supplierId
+          in: path
+          description: Supplier id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+  /suppliers/orders:
+    get:
+      tags:
+        - supplier-orders
+      summary: Get all supplier orders
+      description: Get all supplier orders
+      operationId: getAllSupplierOrders
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupplierOrderDTO'
+        '400':
+          description: Invalid status value
+    post:
+      tags:
+        - supplier-orders
+      summary: Add a new supplier order
+      description: Create a new supplier order
+      operationId: addSupplierOrder
+      requestBody:
+        description: supplier order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierOrderDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierOrderDTO'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /suppliers/orders/{orderId}:
+    get:
+      tags:
+        - supplier-orders
+      summary: Find supplier order by ID
+      description: Returns a single supplier order
+      operationId: getSupplierOrderById
+      parameters:
+        - name: orderId
+          in: path
+          description: ID of supplier order to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierOrderDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Supplier not found
+    put:
+      tags:
+        - supplier-orders
+      summary: Update an existing supplier order
+      description: Update an existing supplier order by Id
+      operationId: updateSupplierOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: supplier order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierOrderDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierOrderDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Ingredient not found
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - supplier-orders
+      summary: Deletes an supplier order
+      description: Deletes an supplier order
+      operationId: deleteSupplierOrder
+      parameters:
+        - name: orderId
+          in: path
+          description: Supplier order id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+  /suppliers/orders/{orderId}/recieved:
+    put:
+      tags:
+        - supplier-orders
+      summary: Considerate supplier order with given id as recieved
+      description: Updating the status of receiving an order with a given id
+      operationId: recieveOrder
+      parameters:
+        - name: orderId
+          in: path
+          description: Id of order to recieve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+  /suppliers/orders/{orderId}/lines:
+    get:
+      tags:
+        - supplier-order-lines
+      summary: Get all supplier order lines for specific order
+      description: Get all supplier order lines for specific order
+      operationId: getSupplierOrderLines
+      parameters:
+        - name: orderId
+          in: path
+          description: Id of order which contains own lines
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SupplierOrderLineDTO'
+        '400':
+          description: Invalid status value
+  /suppliers/orders/{orderId}/lines/{ingredientId}:
+    post:
+        tags:
+          - supplier-order-lines
+        summary: Create a new supplier order line
+        description: Create a new supplier order line
+        operationId: createOrderLine
+        parameters:
+          - name: orderId
+            in: path
+            required: true
+            schema:
+              type: integer
+              format: int64
+          - name: ingredientId
+            in: path
+            required: true
+            schema:
+              type: integer
+              format: int64
+        requestBody:
+          description: supplier order line
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierOrderLineDTO'
+          required: true
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SupplierOrderLineDTO'
+          '400':
+            description: Invalid input
+          '422':
+            description: Validation exception
 
 components:
   schemas:
@@ -159,3 +478,60 @@ components:
             - G
             - PIECE
             - ML
+    SupplierDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "My Supplier"
+        description:
+          type: string
+          example: "My Supplier Description"
+        email:
+          type: string
+          example: "supplier@mysupplier.com"
+        phone:
+          type: string
+          example: "+420111222333"
+    SupplierOrderDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        supplier:
+          $ref: "#/components/schemas/SupplierDTO"
+        orderDate:
+          type: string
+          format: date-time
+          example: "2024-02-26T15:00:00"
+        orderDeliveryDate:
+          type: string
+          format: date-time
+          example: "2024-02-26T15:00:00"
+        isRecieved:
+          type: boolean
+    SupplierOrderLineDTO:
+      type: object
+      properties:
+        quantity:
+          type: number
+          example: 2.5
+        purchasePrice:
+          type: number
+          example: 57.9
+        supplierOrderId:
+          type: integer
+          format: int64
+        ingredientId:
+          type: integer
+          format: int64
+        supplierOrder:
+          $ref: "#/components/schemas/SupplierOrderDTO"
+        ingredient:
+          $ref: "#/components/schemas/IngredientDTO"
