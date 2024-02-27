@@ -371,17 +371,17 @@ paths:
       responses:
         '400':
           description: Invalid ID supplied
-  /suppliers/orders/{orderId}/recieved:
-    put:
+  /suppliers/orders/{orderId}/received:
+    patch:
       tags:
         - supplier-orders
-      summary: Considerate supplier order with given id as recieved
+      summary: Considerate supplier order with given id as received
       description: Updating the status of receiving an order with a given id
-      operationId: recieveOrder
+      operationId: receiveOrder
       parameters:
         - name: orderId
           in: path
-          description: Id of order to recieve
+          description: Id of order to receive
           required: true
           schema:
             type: integer
@@ -389,70 +389,6 @@ paths:
       responses:
         '400':
           description: Invalid ID supplied
-  /suppliers/orders/{orderId}/lines:
-    get:
-      tags:
-        - supplier-order-lines
-      summary: Get all supplier order lines for specific order
-      description: Get all supplier order lines for specific order
-      operationId: getSupplierOrderLines
-      parameters:
-        - name: orderId
-          in: path
-          description: Id of order which contains own lines
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SupplierOrderLineDTO'
-        '400':
-          description: Invalid status value
-  /suppliers/orders/{orderId}/lines/{ingredientId}:
-    post:
-        tags:
-          - supplier-order-lines
-        summary: Create a new supplier order line
-        description: Create a new supplier order line
-        operationId: createOrderLine
-        parameters:
-          - name: orderId
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: int64
-          - name: ingredientId
-            in: path
-            required: true
-            schema:
-              type: integer
-              format: int64
-        requestBody:
-          description: supplier order line
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SupplierOrderLineDTO'
-          required: true
-        responses:
-          '200':
-            description: Successful operation
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/SupplierOrderLineDTO'
-          '400':
-            description: Invalid input
-          '422':
-            description: Validation exception
 
 components:
   schemas:
@@ -504,8 +440,10 @@ components:
           type: integer
           format: int64
           example: 1
-        supplier:
-          $ref: "#/components/schemas/SupplierDTO"
+        supplierId:
+          type: integer
+          format: int64
+          example: 1
         orderDate:
           type: string
           format: date-time
@@ -514,8 +452,12 @@ components:
           type: string
           format: date-time
           example: "2024-02-26T15:00:00"
-        isRecieved:
+        isReceived:
           type: boolean
+        orderLines:
+          type: array
+          items:
+            $ref: "#/components/schemas/SupplierOrderLineDTO"
     SupplierOrderLineDTO:
       type: object
       properties:
@@ -531,7 +473,3 @@ components:
         ingredientId:
           type: integer
           format: int64
-        supplierOrder:
-          $ref: "#/components/schemas/SupplierOrderDTO"
-        ingredient:
-          $ref: "#/components/schemas/IngredientDTO"
