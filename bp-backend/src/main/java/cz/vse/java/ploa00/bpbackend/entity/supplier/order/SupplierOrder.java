@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,13 +25,13 @@ public class SupplierOrder {
     private Long id;
 
     @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderDate;
+    private OffsetDateTime orderDate;
 
     @Column(name = "order_delivery_date", nullable = false)
-    private LocalDateTime orderDeliveryDate;
+    private OffsetDateTime orderDeliveryDate;
 
-    @Column(name = "is_recieved", nullable = false)
-    private Boolean isRecieved;
+    @Column(name = "is_received", nullable = false)
+    private Boolean isReceived;
 
     /* Relations */
 
@@ -39,8 +39,8 @@ public class SupplierOrder {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "supplier_order_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "SUPPLIER_ORDER_LINE", joinColumns = @JoinColumn(name = "supplier_order_id"))
     @OrderColumn(name = "line_order")
     private List<SupplierOrderLine> supplierOrderLines;
 
@@ -49,12 +49,12 @@ public class SupplierOrder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SupplierOrder that = (SupplierOrder) o;
-        return Objects.equals(id, that.id) && Objects.equals(orderDate, that.orderDate) && Objects.equals(orderDeliveryDate, that.orderDeliveryDate) && Objects.equals(isRecieved, that.isRecieved) && Objects.equals(supplier, that.supplier) && Objects.equals(supplierOrderLines, that.supplierOrderLines);
+        return Objects.equals(id, that.id) && Objects.equals(orderDate, that.orderDate) && Objects.equals(orderDeliveryDate, that.orderDeliveryDate) && Objects.equals(isReceived, that.isReceived) && Objects.equals(supplier, that.supplier) && Objects.equals(supplierOrderLines, that.supplierOrderLines);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderDate, orderDeliveryDate, isRecieved, supplier, supplierOrderLines);
+        return Objects.hash(id, orderDate, orderDeliveryDate, isReceived, supplier, supplierOrderLines);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class SupplierOrder {
                 "id=" + id +
                 ", orderDate=" + orderDate +
                 ", orderDeliveryDate=" + orderDeliveryDate +
-                ", isRecieved=" + isRecieved +
+                ", isReceived=" + isReceived +
                 ", supplier=" + supplier +
                 ", supplierOrderLines=" + supplierOrderLines +
                 '}';

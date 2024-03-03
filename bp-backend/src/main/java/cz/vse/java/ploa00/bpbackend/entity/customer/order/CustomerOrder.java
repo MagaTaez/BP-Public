@@ -36,8 +36,8 @@ public class CustomerOrder {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "customer_order_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "CUSTOMER_ORDER_LINE", joinColumns = @JoinColumn(name = "customer_order_id"))
     @OrderColumn(name = "line_order")
     private List<CustomerOrderLine> customerOrderLines;
 
