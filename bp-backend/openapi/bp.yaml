@@ -467,9 +467,6 @@ components:
         purchasePrice:
           type: number
           example: 57.9
-        supplierOrderId:
-          type: integer
-          format: int64
         ingredientId:
           type: integer
           format: int64
