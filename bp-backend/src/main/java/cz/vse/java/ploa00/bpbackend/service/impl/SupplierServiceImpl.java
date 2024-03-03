@@ -1,8 +1,11 @@
 package cz.vse.java.ploa00.bpbackend.service.impl;
 
 import cz.vse.java.ploa00.bpbackend.api.gen.model.SupplierDTO;
+import cz.vse.java.ploa00.bpbackend.api.gen.model.SupplierOrderDTO;
 import cz.vse.java.ploa00.bpbackend.entity.supplier.Supplier;
+import cz.vse.java.ploa00.bpbackend.entity.supplier.order.SupplierOrder;
 import cz.vse.java.ploa00.bpbackend.exception.ResourceNotFoundException;
+import cz.vse.java.ploa00.bpbackend.repository.SupplierOrderRepository;
 import cz.vse.java.ploa00.bpbackend.repository.SupplierRepository;
 import cz.vse.java.ploa00.bpbackend.service.SupplierService;
 import lombok.AllArgsConstructor;
@@ -17,6 +20,8 @@ import java.util.stream.Collectors;
 public class SupplierServiceImpl  implements SupplierService {
 
     private SupplierRepository supplierRepository;
+
+    private SupplierOrderRepository supplierOrderRepository;
 
     private ModelMapper modelMapper;
 
@@ -73,5 +78,29 @@ public class SupplierServiceImpl  implements SupplierService {
             throw new ResourceNotFoundException("Supplier not found with given id" + supplierId);
         }
 
+    }
+
+    @Override
+    public SupplierOrderDTO addSupplierOrder(SupplierOrderDTO supplierOrderDTO) {
+        SupplierOrder supplierOrder = modelMapper.map(supplierOrderDTO, SupplierOrder.class);
+
+        SupplierOrder savedSupplierOrder = supplierOrderRepository.save(supplierOrder);
+
+        return modelMapper.map(savedSupplierOrder, SupplierOrderDTO.class);
+    }
+
+    @Override
+    public SupplierOrderDTO updateSupplierOrder(Long supplierOrderId, SupplierOrderDTO supplierOrderDTO) {
+
+        supplierOrderRepository.findById(supplierOrderId)
+                .orElseThrow(() -> new ResourceNotFoundException("SupplierOrder not found with given id" + supplierOrderId));
+
+        SupplierOrder supplierOrder = modelMapper.map(supplierOrderDTO, SupplierOrder.class);
+
+        supplierOrder.setId(supplierOrderId);
+
+        SupplierOrder updatedSupplierOrder = supplierOrderRepository.save(supplierOrder);
+
+        return modelMapper.map(updatedSupplierOrder, SupplierOrderDTO.class);
     }
 }
