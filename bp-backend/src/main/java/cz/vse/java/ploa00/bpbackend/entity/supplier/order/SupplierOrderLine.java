@@ -14,12 +14,8 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "SUPPLIER_ORDER_LINE")
+@Embeddable
 public class SupplierOrderLine {
-
-    @EmbeddedId
-    private SupplierOrderLineCompositeKey supplierOrderLineCompositeKey;
 
     @Column
     private BigDecimal quantity;
@@ -29,8 +25,7 @@ public class SupplierOrderLine {
 
     /* Relations */
 
-    @ManyToOne
-    @MapsId("ingredientId")
+    @ManyToOne(optional = false)
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
@@ -39,21 +34,19 @@ public class SupplierOrderLine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SupplierOrderLine that = (SupplierOrderLine) o;
-        return Objects.equals(supplierOrderLineCompositeKey, that.supplierOrderLineCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(purchasePrice, that.purchasePrice) &&  Objects.equals(ingredient, that.ingredient);
+        return Objects.equals(quantity, that.quantity) && Objects.equals(purchasePrice, that.purchasePrice) && Objects.equals(ingredient, that.ingredient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(supplierOrderLineCompositeKey, quantity, purchasePrice, ingredient);
+        return Objects.hash(quantity, purchasePrice, ingredient);
     }
 
     @Override
     public String toString() {
         return "SupplierOrderLine{" +
-                "supplierOrderLineCompositeKey=" + supplierOrderLineCompositeKey +
                 ", quantity=" + quantity +
                 ", purchasePrice=" + purchasePrice +
-                ", supplierOrder="  +
                 ", ingredient=" + ingredient +
                 '}';
     }

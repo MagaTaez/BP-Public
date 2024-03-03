@@ -7,24 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "CUSTOMER_ORDER_LINE")
+@Embeddable
 public class CustomerOrderLine {
 
-    @EmbeddedId
-    private CustomerOrderLineCompositeKey customerOrderLineCompositeKey;
-
     @Column
-    private Integer quantity;
+    private BigDecimal quantity;
 
     @Column(name = "sell_price")
-    private Integer sellPrice;
+    private BigDecimal sellPrice;
 
     /* Relations */
 
@@ -38,19 +35,18 @@ public class CustomerOrderLine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CustomerOrderLine that = (CustomerOrderLine) o;
-        return Objects.equals(customerOrderLineCompositeKey, that.customerOrderLineCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(sellPrice, that.sellPrice) && Objects.equals(product, that.product);
+        return Objects.equals(quantity, that.quantity) && Objects.equals(sellPrice, that.sellPrice) && Objects.equals(product, that.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerOrderLineCompositeKey, quantity, sellPrice, product);
+        return Objects.hash(quantity, sellPrice, product);
     }
 
     @Override
     public String toString() {
         return "CustomerOrderLine{" +
-                "customerOrderLineCompositeKey=" + customerOrderLineCompositeKey +
-                ", quantity=" + quantity +
+                "quantity=" + quantity +
                 ", sellPrice=" + sellPrice +
                 ", product=" + product +
                 '}';
