@@ -1,6 +1,7 @@
 package cz.vse.java.ploa00.bpbackend.delegate;
 
 import cz.vse.java.ploa00.bpbackend.api.gen.model.SupplierDTO;
+import cz.vse.java.ploa00.bpbackend.api.gen.model.SupplierOrderDTO;
 import cz.vse.java.ploa00.bpbackend.api.gen.rest.SuppliersApiDelegate;
 import cz.vse.java.ploa00.bpbackend.service.SupplierService;
 import lombok.AllArgsConstructor;
@@ -54,5 +55,40 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
         SupplierDTO updatedSupplier = supplierService.updateSupplier(supplierId, supplierDTO);
 
         return ResponseEntity.ok(updatedSupplier);
+    }
+
+    @Override
+    public ResponseEntity<SupplierOrderDTO> addSupplierOrder(SupplierOrderDTO supplierOrderDTO) {
+        SupplierOrderDTO savedSupplierOrderDTO = supplierService.addSupplierOrder(supplierOrderDTO);
+
+        return new ResponseEntity<>(savedSupplierOrderDTO, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteSupplierOrder(Long orderId) {
+        return SuppliersApiDelegate.super.deleteSupplierOrder(orderId);
+    }
+
+    @Override
+    public ResponseEntity<List<SupplierOrderDTO>> getAllSupplierOrders() {
+        return SuppliersApiDelegate.super.getAllSupplierOrders();
+    }
+
+    @Override
+    public ResponseEntity<SupplierOrderDTO> getSupplierOrderById(Long orderId) {
+        return SuppliersApiDelegate.super.getSupplierOrderById(orderId);
+    }
+
+    @Override
+    public ResponseEntity<Void> receiveOrder(Long orderId) {
+        return SuppliersApiDelegate.super.receiveOrder(orderId);
+    }
+
+    @Override
+    public ResponseEntity<SupplierOrderDTO> updateSupplierOrder(Long orderId, SupplierOrderDTO supplierOrderDTO) {
+
+        SupplierOrderDTO updatedSupplierOrderDTO = supplierService.updateSupplierOrder(orderId, supplierOrderDTO);
+
+        return new ResponseEntity<>(updatedSupplierOrderDTO, HttpStatus.CREATED);
     }
 }
