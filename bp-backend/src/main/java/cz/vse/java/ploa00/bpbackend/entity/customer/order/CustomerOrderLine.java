@@ -26,7 +26,6 @@ public class CustomerOrderLine {
     /* Relations */
 
     @ManyToOne
-    @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
 
