@@ -66,22 +66,31 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteSupplierOrder(Long orderId) {
-        return SuppliersApiDelegate.super.deleteSupplierOrder(orderId);
+        supplierService.deleteSupplierOrder(orderId);
+
+        return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<List<SupplierOrderDTO>> getAllSupplierOrders() {
-        return SuppliersApiDelegate.super.getAllSupplierOrders();
+        List<SupplierOrderDTO> allSupplierOrders = supplierService.getAllSupplierOrders();
+
+        return ResponseEntity.ok(allSupplierOrders);
     }
 
     @Override
     public ResponseEntity<SupplierOrderDTO> getSupplierOrderById(Long orderId) {
-        return SuppliersApiDelegate.super.getSupplierOrderById(orderId);
+        SupplierOrderDTO supplierOrderDTO = supplierService.getSupplierOrderById(orderId);
+
+        return new ResponseEntity<>(supplierOrderDTO, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> receiveOrder(Long orderId) {
-        return SuppliersApiDelegate.super.receiveOrder(orderId);
+
+        supplierService.receiveOrder(orderId);
+
+        return ResponseEntity.ok().build();
     }
 
     @Override
