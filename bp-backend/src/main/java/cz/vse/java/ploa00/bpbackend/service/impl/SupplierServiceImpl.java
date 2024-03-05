@@ -106,6 +106,10 @@ public class SupplierServiceImpl  implements SupplierService {
 
         supplierOrder.setId(supplierOrderId);
 
+//        if (supplierOrder.getIsReceived()) {
+//            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+//        }
+
         SupplierOrder updatedSupplierOrder = supplierOrderRepository.save(supplierOrder);
 
         return modelMapper.map(updatedSupplierOrder, SupplierOrderDTO.class);
@@ -132,7 +136,13 @@ public class SupplierServiceImpl  implements SupplierService {
     @Override
     public void deleteSupplierOrder(Long supplierOrderId) {
 
-        if (supplierOrderRepository.existsById(supplierOrderId)) {
+        SupplierOrder supplierOrder = supplierOrderRepository.findById(supplierOrderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Supplier Order not found with given id: " + supplierOrderId));
+
+        if (supplierOrderId.equals(supplierOrder.getId())) {
+//            if (supplierOrder.getIsReceived()) {
+//            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+//        }
             supplierOrderRepository.deleteById(supplierOrderId);
         } else {
             throw new ResourceNotFoundException("Supplier Order not found with given id: " + supplierOrderId);
