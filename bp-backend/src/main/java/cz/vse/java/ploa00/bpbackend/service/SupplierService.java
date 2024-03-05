@@ -21,5 +21,13 @@ public interface SupplierService {
 
     SupplierOrderDTO updateSupplierOrder(Long supplierOrderId, SupplierOrderDTO supplierOrderDTO);
 
+    List<SupplierOrderDTO> getAllSupplierOrders();
+
+    SupplierOrderDTO getSupplierOrderById(Long supplierOrderId);
+
+    void deleteSupplierOrder(Long supplierOrderId);
+
+    void receiveOrder(Long supplierOrderId);
+
 
 }
