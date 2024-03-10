@@ -6,6 +6,7 @@ import cz.vse.java.ploa00.bpbackend.entity.ingredient.Ingredient;
 import cz.vse.java.ploa00.bpbackend.entity.supplier.Supplier;
 import cz.vse.java.ploa00.bpbackend.entity.supplier.order.SupplierOrder;
 import cz.vse.java.ploa00.bpbackend.entity.supplier.order.SupplierOrderLine;
+import cz.vse.java.ploa00.bpbackend.exception.OrderStateException;
 import cz.vse.java.ploa00.bpbackend.exception.ResourceNotFoundException;
 import cz.vse.java.ploa00.bpbackend.repository.IngredientRepository;
 import cz.vse.java.ploa00.bpbackend.repository.SupplierOrderRepository;
@@ -106,9 +107,9 @@ public class SupplierServiceImpl  implements SupplierService {
 
         supplierOrder.setId(supplierOrderId);
 
-//        if (supplierOrder.getIsReceived()) {
-//            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
-//        }
+        if (supplierOrder.getIsReceived()) {
+            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+        }
 
         SupplierOrder updatedSupplierOrder = supplierOrderRepository.save(supplierOrder);
 
@@ -140,9 +141,9 @@ public class SupplierServiceImpl  implements SupplierService {
                 .orElseThrow(() -> new ResourceNotFoundException("Supplier Order not found with given id: " + supplierOrderId));
 
         if (supplierOrderId.equals(supplierOrder.getId())) {
-//            if (supplierOrder.getIsReceived()) {
-//            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
-//        }
+            if (supplierOrder.getIsReceived()) {
+            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+        }
             supplierOrderRepository.deleteById(supplierOrderId);
         } else {
             throw new ResourceNotFoundException("Supplier Order not found with given id: " + supplierOrderId);
@@ -155,19 +156,15 @@ public class SupplierServiceImpl  implements SupplierService {
         SupplierOrder supplierOrder = supplierOrderRepository.findById(supplierOrderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Supplier Order not found with given id: " + supplierOrderId));
 
-//        if (supplierOrder.getIsReceived()) {
-//            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
-//        }
+        if (supplierOrder.getIsReceived()) {
+            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+        }
 
         supplierOrder.setIsReceived(true);
 
         List<SupplierOrderLine> orderLines = supplierOrder.getSupplierOrderLines();
 
-//        if (orderLines.isEmpty()) {
-//            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " contains no lines");
-//        }
-
-        for (SupplierOrderLine line :orderLines) {
+        for (SupplierOrderLine line : orderLines) {
             Ingredient ingredient = line.getIngredient();
             BigDecimal stockIncrement = line.getQuantity();
             ingredient.setStock(stockIncrement.add(ingredient.getStock()));
