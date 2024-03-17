@@ -389,6 +389,378 @@ paths:
       responses:
         '400':
           description: Invalid ID supplied
+  /products:
+    post:
+      tags:
+        - products
+      summary: Add a new product to the menu
+      description: Add a new product to the menu
+      operationId: addProduct
+      requestBody:
+        description: product
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+    get:
+        tags:
+          - products
+        summary: Get all products
+        description: Get all products
+        operationId: getAllProducts
+        responses:
+          '200':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ProductDTO'
+          '400':
+            description: Invalid status value
+  /products/{productId}:
+    get:
+        tags:
+          - products
+        summary: Find products by ID
+        description: Returns a single product
+        operationId: getProductById
+        parameters:
+          - name: productId
+            in: path
+            description: ID of product to return
+            required: true
+            schema:
+                type: integer
+                format: int64
+        responses:
+            '200':
+              description: successful operation
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ProductDTO'
+            '400':
+              description: Invalid ID supplied
+            '404':
+              description: Product not found
+    put:
+        tags:
+            - products
+        summary: Update an existing product
+        description: Update an existing product by Id
+        operationId: updateProduct
+        parameters:
+          - name: productId
+            in: path
+            required: true
+            schema:
+              type: integer
+              format: int64
+        requestBody:
+          description: product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+          required: true
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ProductDTO'
+          '400':
+            description: Invalid ID supplied
+          '404':
+            description: Product not found
+          '422':
+            description: Validation exception
+    delete:
+      tags:
+        - products
+      summary: Deletes an product
+      description: Deletes an product
+      operationId: deleteProduct
+      parameters:
+        - name: productId
+          in: path
+          description: Product id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+  /customers:
+    post:
+      tags:
+        - customers
+      summary: Add a new customer to the menu
+      description: Add a new customer to the menu
+      operationId: addCustomer
+      requestBody:
+        description: customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+    get:
+      tags:
+        - customers
+      summary: Get all customers
+      description: Get all customers
+      operationId: getAllCustomers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerDTO'
+        '400':
+          description: Invalid status value
+  /customers/{customerId}:
+    get:
+      tags:
+        - customers
+      summary: Find customer by ID
+      description: Returns a single customer
+      operationId: getCustomerById
+      parameters:
+        - name: customerId
+          in: path
+          description: ID of customer to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Customer not found
+    put:
+      tags:
+        - customers
+      summary: Update an existing customer
+      description: Update an existing customer by Id
+      operationId: updateCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Customer not found
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - customers
+      summary: Deletes an customer
+      description: Deletes an customer
+      operationId: deleteCustomer
+      parameters:
+        - name: customerId
+          in: path
+          description: Customer id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+  /customers/orders:
+    get:
+      tags:
+        - customer-orders
+      summary: Get all customer orders
+      description: Get all customer orders
+      operationId: getAllCustomerOrders
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerOrderDTO'
+        '400':
+          description: Invalid status value
+    post:
+      tags:
+        - customer-orders
+      summary: Add a new customer order
+      description: Create a new customer order
+      operationId: addCustomerOrder
+      requestBody:
+        description: customer order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerOrderDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOrderDTO'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /customers/orders/{orderId}:
+    get:
+      tags:
+        - customer-orders
+      summary: Find customer order by ID
+      description: Returns a single customer order
+      operationId: getCustomerOrderById
+      parameters:
+        - name: orderId
+          in: path
+          description: ID of customer order to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOrderDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Customer not found
+    put:
+      tags:
+        - customer-orders
+      summary: Update an existing customer order
+      description: Update an existing customer order by Id
+      operationId: updateCustomerOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: customer order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerOrderDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOrderDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Customer not found
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - customer-orders
+      summary: Deletes an customer order
+      description: Deletes an customer order
+      operationId: deleteCustomerOrder
+      parameters:
+        - name: orderId
+          in: path
+          description: Customer order id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+  /customers/orders/{orderId}/delivered:
+    patch:
+      tags:
+        - customer-orders
+      summary: Considerate customer order with given id as delivered
+      description: Updating the status of delivering an order with a given id
+      operationId: deliverOrder
+      parameters:
+        - name: orderId
+          in: path
+          description: Id of order to deliver
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
 
 components:
   schemas:
@@ -468,5 +840,83 @@ components:
           type: number
           example: 57.9
         ingredientId:
+          type: integer
+          format: int64
+    ProductDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "My Product"
+        description:
+          type: string
+          example: "My Product Description"
+        ingredients:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductIngredientDTO"
+    ProductIngredientDTO:
+      type: object
+      properties:
+        quantity:
+          type: number
+          example: 0.2
+        ingredientId:
+          type: integer
+          format: int64
+    CustomerDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "My Customer"
+        description:
+          type: string
+          example: "My Customer Description"
+        email:
+          type: string
+          example: "customer@customer.com"
+        phone:
+          type: string
+          example: "+420111222333"
+    CustomerOrderDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        supplierId:
+          type: integer
+          format: int64
+          example: 1
+        orderDate:
+          type: string
+          format: date-time
+          example: "2024-02-26T15:00:00"
+        isDelivered:
+          type: boolean
+        orderLines:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerOrderLineDTO"
+    CustomerOrderLineDTO:
+      type: object
+      properties:
+        quantity:
+          type: number
+          example: 2.5
+        sellPrice:
+          type: number
+          example: 57.9
+        productId:
           type: integer
           format: int64
