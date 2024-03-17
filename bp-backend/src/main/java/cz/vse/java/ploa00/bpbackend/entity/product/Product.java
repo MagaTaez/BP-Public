@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,9 +34,9 @@ public class Product {
 
     /* Relations */
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_id")
-    private Set<ProductIngredient> productIngredients;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PRODUCT_INGREDIENT", joinColumns = @JoinColumn(name = "product_id"))
+    private List<ProductIngredient> productIngredients;
 
     @Override
     public boolean equals(Object o) {

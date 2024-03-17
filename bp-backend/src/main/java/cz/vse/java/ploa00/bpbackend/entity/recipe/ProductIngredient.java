@@ -14,12 +14,8 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "PRODUCT_INGREDIENT")
+@Embeddable
 public class ProductIngredient {
-
-    @EmbeddedId
-    private ProductIngredientCompositeKey productIngredientCompositeKey;
 
     @Column
     private BigDecimal quantity;
@@ -27,7 +23,6 @@ public class ProductIngredient {
     /* Relations */
 
     @ManyToOne
-    @MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
@@ -36,19 +31,18 @@ public class ProductIngredient {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductIngredient that = (ProductIngredient) o;
-        return Objects.equals(productIngredientCompositeKey, that.productIngredientCompositeKey) && Objects.equals(quantity, that.quantity) && Objects.equals(ingredient, that.ingredient);
+        return Objects.equals(quantity, that.quantity) && Objects.equals(ingredient, that.ingredient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productIngredientCompositeKey, quantity, ingredient);
+        return Objects.hash(quantity, ingredient);
     }
 
     @Override
     public String toString() {
         return "ProductIngredient{" +
-                "productIngredientCompositeKey=" + productIngredientCompositeKey +
-                ", quantity=" + quantity +
+                "quantity=" + quantity +
                 ", ingredient=" + ingredient +
                 '}';
     }
