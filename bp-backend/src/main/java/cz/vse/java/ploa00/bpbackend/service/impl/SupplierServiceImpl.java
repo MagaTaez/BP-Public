@@ -108,7 +108,7 @@ public class SupplierServiceImpl  implements SupplierService {
         supplierOrder.setId(supplierOrderId);
 
         if (supplierOrder.getIsReceived()) {
-            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received. It can be updated");
         }
 
         SupplierOrder updatedSupplierOrder = supplierOrderRepository.save(supplierOrder);
@@ -142,7 +142,7 @@ public class SupplierServiceImpl  implements SupplierService {
 
         if (supplierOrderId.equals(supplierOrder.getId())) {
             if (supplierOrder.getIsReceived()) {
-            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received.");
+            throw new OrderStateException("Supplier Order with given id: " + supplierOrderId + " is already received. It can be deleted.");
         }
             supplierOrderRepository.deleteById(supplierOrderId);
         } else {
