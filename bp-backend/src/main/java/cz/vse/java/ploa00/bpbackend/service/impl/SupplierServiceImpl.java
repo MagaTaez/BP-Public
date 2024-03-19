@@ -119,9 +119,9 @@ public class SupplierServiceImpl  implements SupplierService {
     @Override
     public List<SupplierOrderDTO> getAllSupplierOrders() {
 
-        List<SupplierOrder> allSuppliers = supplierOrderRepository.findAll();
+        List<SupplierOrder> allSupplierOrders = supplierOrderRepository.findAll();
 
-        return allSuppliers.stream().map((supplierOrder -> modelMapper.map(supplierOrder, SupplierOrderDTO.class)))
+        return allSupplierOrders.stream().map((supplierOrder -> modelMapper.map(supplierOrder, SupplierOrderDTO.class)))
                 .collect(Collectors.toList());
     }
 
