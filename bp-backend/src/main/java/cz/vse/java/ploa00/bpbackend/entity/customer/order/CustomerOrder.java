@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class CustomerOrder {
     private Long id;
 
     @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderDate;
+    private OffsetDateTime orderDate;
 
     @Column(name = "is_delivered", nullable = false)
     private Boolean isDelivered;
