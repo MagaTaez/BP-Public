@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Product {
     private String description;
 
     @Column(name = "sale_price", nullable = false)
-    private Integer salePrice;
+    private BigDecimal salePrice;
 
     /* Relations */
 
