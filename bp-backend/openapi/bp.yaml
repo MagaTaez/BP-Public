@@ -855,6 +855,9 @@ components:
         description:
           type: string
           example: "My Product Description"
+        salePrice:
+          type: number
+          example: 199.00
         ingredients:
           type: array
           items:
@@ -894,7 +897,7 @@ components:
           type: integer
           format: int64
           example: 1
-        supplierId:
+        customerId:
           type: integer
           format: int64
           example: 1
