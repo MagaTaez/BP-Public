@@ -59,6 +59,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierOrderDTO> addSupplierOrder(SupplierOrderDTO supplierOrderDTO) {
+
         SupplierOrderDTO savedSupplierOrderDTO = supplierService.addSupplierOrder(supplierOrderDTO);
 
         return new ResponseEntity<>(savedSupplierOrderDTO, HttpStatus.CREATED);
@@ -66,6 +67,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteSupplierOrder(Long orderId) {
+
         supplierService.deleteSupplierOrder(orderId);
 
         return ResponseEntity.ok().build();
@@ -73,6 +75,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<List<SupplierOrderDTO>> getAllSupplierOrders() {
+
         List<SupplierOrderDTO> allSupplierOrders = supplierService.getAllSupplierOrders();
 
         return ResponseEntity.ok(allSupplierOrders);
@@ -80,6 +83,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierOrderDTO> getSupplierOrderById(Long orderId) {
+
         SupplierOrderDTO supplierOrderDTO = supplierService.getSupplierOrderById(orderId);
 
         return new ResponseEntity<>(supplierOrderDTO, HttpStatus.OK);
