@@ -761,6 +761,124 @@ paths:
       responses:
         '400':
           description: Invalid ID supplied
+  /qrmodels:
+    post:
+      tags:
+        - qrModels
+      summary: Add a new QR model for the inventory item
+      description: Add a new QR model for the inventory item
+      operationId: addQRModel
+      requestBody:
+        description: qrModel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QRModelDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QRModelDTO'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+    get:
+      tags:
+        - qrModels
+      summary: Get all QR models
+      description: Get all qrModels
+      operationId: getAllQRModels
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QRModelDTO'
+        '400':
+          description: Invalid status value
+  /qrmodels/{qrmodelId}:
+    get:
+      tags:
+        - qrModels
+      summary: Find QR model by ID
+      description: Returns a single QR model
+      operationId: getQRModelById
+      parameters:
+        - name: qrmodelId
+          in: path
+          description: ID of QR model to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QRModelDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: QR model not found
+    put:
+      tags:
+        - qrModels
+      summary: Update an existing QR model
+      description: Update an existing QR model by Id
+      operationId: updateQRModel
+      parameters:
+        - name: qrmodelId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: QR Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QRModelDTO'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QRModelDTO'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: QR model not found
+        '422':
+          description: Validation exception
+    delete:
+      tags:
+        - qrModels
+      summary: Deletes an QR Model
+      description: Deletes an QR Model
+      operationId: deleteQRModel
+      parameters:
+        - name: qrmodelId
+          in: path
+          description: QR Model id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
 
 components:
   schemas:
@@ -921,5 +1039,38 @@ components:
           type: number
           example: 57.9
         productId:
+          type: integer
+          format: int64
+    QRModelDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        demand:
+          type: number
+        standardDeviation:
+          type: number
+        leadTime:
+          type: number
+        demandLeadTime:
+          type: number
+        standardDeviationLeadTime:
+          type: number
+        orderingCost:
+          type: number
+        holdingCost:
+          type: number
+        stockoutCost:
+          type: number
+        reorderPoint:
+          type: number
+        orderQuantity:
+          type: number
+        safetyStock:
+          type: number
+        totalCost:
+          type: number
+        ingredientId:
           type: integer
           format: int64
