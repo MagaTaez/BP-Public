@@ -172,20 +172,25 @@ public class CustomerServiceImpl implements CustomerService {
             List<ProductIngredient> productIngredients = product.getProductIngredients();
 
             for (ProductIngredient productIngredient : productIngredients) {
-                Ingredient ingredient = productIngredient.getIngredient();
-                BigDecimal requiredQuantity = productIngredient.getQuantity();
-                BigDecimal totalRequiredQuantity = requiredQuantity.multiply(productQuantity);
-                BigDecimal availableStock = ingredient.getStock();
-
-                if (totalRequiredQuantity.compareTo(availableStock) > 0) {
-                    throw new StockException("Insufficient stock for ingredient: " + ingredient.getName());
-                }
-
-                ingredient.setStock(availableStock.subtract(totalRequiredQuantity));
+                Ingredient ingredient = getIngredient(productIngredient, productQuantity);
                 ingredientRepository.save(ingredient);
             }
         }
 
         customerOrderRepository.save(customerOrder);
+    }
+
+    private static Ingredient getIngredient(ProductIngredient productIngredient, BigDecimal productQuantity) {
+        Ingredient ingredient = productIngredient.getIngredient();
+        BigDecimal requiredQuantity = productIngredient.getQuantity();
+        BigDecimal totalRequiredQuantity = requiredQuantity.multiply(productQuantity);
+        BigDecimal availableStock = ingredient.getStock();
+
+        if (totalRequiredQuantity.compareTo(availableStock) > 0) {
+            throw new StockException("Insufficient stock for ingredient: " + ingredient.getName());
+        }
+
+        ingredient.setStock(availableStock.subtract(totalRequiredQuantity));
+        return ingredient;
     }
 }

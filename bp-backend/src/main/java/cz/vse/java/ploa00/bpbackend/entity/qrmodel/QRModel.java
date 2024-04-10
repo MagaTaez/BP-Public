@@ -16,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "QR_MODEL")
-public class QrModel {
+public class QRModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +41,6 @@ public class QrModel {
     @Column(name = "ordering_cost", nullable = false)
     private BigDecimal orderingCost;
 
-    @Column(name = "purchase_cost", nullable = false)
-    private BigDecimal purchaseCost;
-
     @Column(name = "holding_cost", nullable = false)
     private BigDecimal holdingCost;
 
@@ -59,6 +56,9 @@ public class QrModel {
     @Column(name = "safety_stock", nullable = false)
     private BigDecimal safetyStock;
 
+    @Column(name = "total_cost", nullable = false)
+    private BigDecimal totalCost;
+
     /* Relations */
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -69,18 +69,18 @@ public class QrModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        QrModel qrModel = (QrModel) o;
-        return Objects.equals(id, qrModel.id) && Objects.equals(demand, qrModel.demand) && Objects.equals(standardDeviation, qrModel.standardDeviation) && Objects.equals(leadTime, qrModel.leadTime) && Objects.equals(demandLeadTime, qrModel.demandLeadTime) && Objects.equals(standardDeviationLeadTime, qrModel.standardDeviationLeadTime) && Objects.equals(orderingCost, qrModel.orderingCost) && Objects.equals(purchaseCost, qrModel.purchaseCost) && Objects.equals(holdingCost, qrModel.holdingCost) && Objects.equals(stockoutCost, qrModel.stockoutCost) && Objects.equals(reorderPoint, qrModel.reorderPoint) && Objects.equals(orderQuantity, qrModel.orderQuantity) && Objects.equals(safetyStock, qrModel.safetyStock);
+        QRModel qrModel = (QRModel) o;
+        return Objects.equals(id, qrModel.id) && Objects.equals(demand, qrModel.demand) && Objects.equals(standardDeviation, qrModel.standardDeviation) && Objects.equals(leadTime, qrModel.leadTime) && Objects.equals(demandLeadTime, qrModel.demandLeadTime) && Objects.equals(standardDeviationLeadTime, qrModel.standardDeviationLeadTime) && Objects.equals(orderingCost, qrModel.orderingCost) && Objects.equals(holdingCost, qrModel.holdingCost) && Objects.equals(stockoutCost, qrModel.stockoutCost) && Objects.equals(reorderPoint, qrModel.reorderPoint) && Objects.equals(orderQuantity, qrModel.orderQuantity) && Objects.equals(safetyStock, qrModel.safetyStock) && Objects.equals(totalCost, qrModel.totalCost) && Objects.equals(ingredient, qrModel.ingredient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, demand, standardDeviation, leadTime, demandLeadTime, standardDeviationLeadTime, orderingCost, purchaseCost, holdingCost, stockoutCost, reorderPoint, orderQuantity, safetyStock);
+        return Objects.hash(id, demand, standardDeviation, leadTime, demandLeadTime, standardDeviationLeadTime, orderingCost, holdingCost, stockoutCost, reorderPoint, orderQuantity, safetyStock, totalCost, ingredient);
     }
 
     @Override
     public String toString() {
-        return "QrModel{" +
+        return "QRModel{" +
                 "id=" + id +
                 ", demand=" + demand +
                 ", standardDeviation=" + standardDeviation +
@@ -88,12 +88,13 @@ public class QrModel {
                 ", demandLeadTime=" + demandLeadTime +
                 ", standardDeviationLeadTime=" + standardDeviationLeadTime +
                 ", orderingCost=" + orderingCost +
-                ", purchaseCost=" + purchaseCost +
                 ", holdingCost=" + holdingCost +
                 ", stockoutCost=" + stockoutCost +
                 ", reorderPoint=" + reorderPoint +
                 ", orderQuantity=" + orderQuantity +
                 ", safetyStock=" + safetyStock +
+                ", totalCost=" + totalCost +
+                ", ingredient=" + ingredient +
                 '}';
     }
 }
