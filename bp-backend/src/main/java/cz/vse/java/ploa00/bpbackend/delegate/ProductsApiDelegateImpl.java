@@ -6,17 +6,18 @@ import cz.vse.java.ploa00.bpbackend.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
+@Service
 @AllArgsConstructor
-public class ProductsApiDelegateImpl implements ProductsApiDelegate {
+public class ProductsApiDelegateImpl extends AbstractDelegate implements ProductsApiDelegate {
 
     private ProductService productService;
     @Override
     public ResponseEntity<ProductDTO> addProduct(ProductDTO productDTO) {
+        checkManagerRole();
 
         ProductDTO savedProduct = productService.addProduct(productDTO);
 
@@ -25,6 +26,7 @@ public class ProductsApiDelegateImpl implements ProductsApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteProduct(Long productId) {
+        checkManagerRole();
 
         productService.deleteProduct(productId);
 
@@ -33,6 +35,7 @@ public class ProductsApiDelegateImpl implements ProductsApiDelegate {
 
     @Override
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        checkEmployeeRole();
 
         List<ProductDTO> allProducts = productService.getAllProducts();
 
@@ -41,6 +44,7 @@ public class ProductsApiDelegateImpl implements ProductsApiDelegate {
 
     @Override
     public ResponseEntity<ProductDTO> getProductById(Long productId) {
+        checkEmployeeRole();
 
         ProductDTO productDTO = productService.getProductById(productId);
 
@@ -49,6 +53,7 @@ public class ProductsApiDelegateImpl implements ProductsApiDelegate {
 
     @Override
     public ResponseEntity<ProductDTO> updateProduct(Long productId, ProductDTO productDTO) {
+        checkManagerRole();
 
         ProductDTO updatedProduct = productService.updateProduct(productId, productDTO);
 

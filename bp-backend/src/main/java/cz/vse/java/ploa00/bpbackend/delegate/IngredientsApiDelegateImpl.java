@@ -6,18 +6,18 @@ import cz.vse.java.ploa00.bpbackend.service.IngredientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
+@Service
 @AllArgsConstructor
-public class IngredientsApiDelegateImpl implements IngredientsApiDelegate {
+public class IngredientsApiDelegateImpl extends AbstractDelegate implements IngredientsApiDelegate {
 
     private IngredientService ingredientService;
     @Override
     public ResponseEntity<IngredientDTO> addIngredient(IngredientDTO ingredientDTO) {
+        checkManagerRole();
 
         IngredientDTO savedIngredient = ingredientService.addIngredient(ingredientDTO);
 
@@ -26,6 +26,7 @@ public class IngredientsApiDelegateImpl implements IngredientsApiDelegate {
 
     @Override
     public ResponseEntity<List<IngredientDTO>> getAllIngredients() {
+        checkEmployeeRole();
 
         List<IngredientDTO> allIngredients = ingredientService.getAllIngredients();
 
@@ -34,6 +35,7 @@ public class IngredientsApiDelegateImpl implements IngredientsApiDelegate {
 
     @Override
     public ResponseEntity<IngredientDTO> getIngredientById(Long ingredientId) {
+        checkEmployeeRole();
 
         IngredientDTO ingredientDTO = ingredientService.getIngredientById(ingredientId);
 
@@ -42,6 +44,7 @@ public class IngredientsApiDelegateImpl implements IngredientsApiDelegate {
 
     @Override
     public ResponseEntity<IngredientDTO> updateIngredient(Long ingredientId, IngredientDTO ingredientDTO) {
+        checkManagerRole();
 
         IngredientDTO updatedIngredient = ingredientService.updateIngredient(ingredientId, ingredientDTO);
 
@@ -50,6 +53,7 @@ public class IngredientsApiDelegateImpl implements IngredientsApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteIngredient(Long ingredientId) {
+        checkManagerRole();
 
         ingredientService.deleteIngredient(ingredientId);
 

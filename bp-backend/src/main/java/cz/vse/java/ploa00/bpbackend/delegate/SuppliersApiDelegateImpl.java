@@ -7,18 +7,19 @@ import cz.vse.java.ploa00.bpbackend.service.SupplierService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
+@Service
 @AllArgsConstructor
-public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
+public class SuppliersApiDelegateImpl extends AbstractDelegate implements SuppliersApiDelegate {
 
     private SupplierService supplierService;
 
     @Override
     public ResponseEntity<SupplierDTO> addSupplier(SupplierDTO supplierDTO) {
+        checkManagerRole();
 
         SupplierDTO savedSupplier = supplierService.addSupplier(supplierDTO);
 
@@ -27,6 +28,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteSupplier(Long supplierId) {
+        checkManagerRole();
 
         supplierService.deleteSupplier(supplierId);
 
@@ -35,6 +37,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<List<SupplierDTO>> getAllSuppliers() {
+        checkEmployeeRole();
 
         List<SupplierDTO> allSuppliers = supplierService.getAllSuppliers();
 
@@ -43,6 +46,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierDTO> getSupplierById(Long supplierId) {
+        checkEmployeeRole();
 
         SupplierDTO supplierDTO = supplierService.getSupplierById(supplierId);
 
@@ -51,6 +55,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierDTO> updateSupplier(Long supplierId, SupplierDTO supplierDTO) {
+        checkManagerRole();
 
         SupplierDTO updatedSupplier = supplierService.updateSupplier(supplierId, supplierDTO);
 
@@ -59,6 +64,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierOrderDTO> addSupplierOrder(SupplierOrderDTO supplierOrderDTO) {
+        checkManagerRole();
 
         SupplierOrderDTO savedSupplierOrderDTO = supplierService.addSupplierOrder(supplierOrderDTO);
 
@@ -67,6 +73,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteSupplierOrder(Long orderId) {
+        checkManagerRole();
 
         supplierService.deleteSupplierOrder(orderId);
 
@@ -75,6 +82,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<List<SupplierOrderDTO>> getAllSupplierOrders() {
+        checkEmployeeRole();
 
         List<SupplierOrderDTO> allSupplierOrders = supplierService.getAllSupplierOrders();
 
@@ -83,6 +91,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierOrderDTO> getSupplierOrderById(Long orderId) {
+        checkEmployeeRole();
 
         SupplierOrderDTO supplierOrderDTO = supplierService.getSupplierOrderById(orderId);
 
@@ -91,6 +100,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<Void> receiveOrder(Long orderId) {
+        checkEmployeeRole();
 
         supplierService.receiveOrder(orderId);
 
@@ -99,6 +109,7 @@ public class SuppliersApiDelegateImpl implements SuppliersApiDelegate {
 
     @Override
     public ResponseEntity<SupplierOrderDTO> updateSupplierOrder(Long orderId, SupplierOrderDTO supplierOrderDTO) {
+        checkManagerRole();
 
         SupplierOrderDTO updatedSupplierOrderDTO = supplierService.updateSupplierOrder(orderId, supplierOrderDTO);
 

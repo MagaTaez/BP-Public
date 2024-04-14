@@ -7,18 +7,18 @@ import cz.vse.java.ploa00.bpbackend.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-@RestController
+@Service
 @AllArgsConstructor
-public class CustomersApiDelegateImpl implements CustomersApiDelegate {
+public class CustomersApiDelegateImpl extends AbstractDelegate implements CustomersApiDelegate {
 
     private CustomerService customerService;
 
     @Override
     public ResponseEntity<CustomerDTO> addCustomer(CustomerDTO customerDTO) {
+        checkManagerRole();
 
         CustomerDTO savedCustomer = customerService.addSCustomer(customerDTO);
 
@@ -27,6 +27,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<CustomerOrderDTO> addCustomerOrder(CustomerOrderDTO customerOrderDTO) {
+        checkEmployeeRole();
 
         CustomerOrderDTO savedCustomerOrder = customerService.addCustomerOrder(customerOrderDTO);
 
@@ -35,6 +36,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteCustomer(Long customerId) {
+        checkManagerRole();
 
         customerService.deleteCustomer(customerId);
 
@@ -43,6 +45,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteCustomerOrder(Long orderId) {
+        checkManagerRole();
 
         customerService.deleteCustomerOrder(orderId);
 
@@ -51,6 +54,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<Void> deliverOrder(Long orderId) {
+        checkEmployeeRole();
 
         customerService.deliverOrder(orderId);
 
@@ -59,6 +63,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<List<CustomerOrderDTO>> getAllCustomerOrders() {
+        checkEmployeeRole();
 
         List<CustomerOrderDTO> allCustomerOrders = customerService.getAllCustomerOrders();
 
@@ -67,14 +72,17 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
+        checkEmployeeRole();
 
         List<CustomerDTO> allCustomers = customerService.getAllCustomers();
 
         return ResponseEntity.ok(allCustomers);
+
     }
 
     @Override
     public ResponseEntity<CustomerDTO> getCustomerById(Long customerId) {
+        checkEmployeeRole();
 
         CustomerDTO customerDTO = customerService.getCustomerById(customerId);
 
@@ -83,6 +91,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<CustomerOrderDTO> getCustomerOrderById(Long orderId) {
+        checkEmployeeRole();
 
         CustomerOrderDTO customerOrderDTO = customerService.getCustomerOrderById(orderId);
 
@@ -91,6 +100,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<CustomerDTO> updateCustomer(Long customerId, CustomerDTO customerDTO) {
+        checkManagerRole();
 
         CustomerDTO updatedCustomer = customerService.updateCustomer(customerId, customerDTO);
 
@@ -99,6 +109,7 @@ public class CustomersApiDelegateImpl implements CustomersApiDelegate {
 
     @Override
     public ResponseEntity<CustomerOrderDTO> updateCustomerOrder(Long orderId, CustomerOrderDTO customerOrderDTO) {
+        checkManagerRole();
 
         CustomerOrderDTO updatedCustomerOrder = customerService.updateCustomerOrder(orderId, customerOrderDTO);
 

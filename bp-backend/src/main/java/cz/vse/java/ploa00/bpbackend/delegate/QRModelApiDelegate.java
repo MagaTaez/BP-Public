@@ -6,18 +6,19 @@ import cz.vse.java.ploa00.bpbackend.service.QRModelService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
+@Service
 @AllArgsConstructor
-public class QRModelApiDelegate implements QrmodelsApiDelegate {
+public class QRModelApiDelegate extends AbstractDelegate implements QrmodelsApiDelegate {
 
     private QRModelService qrModelService;
 
     @Override
     public ResponseEntity<QRModelDTO> addQRModel(QRModelDTO qrModelDTO) {
+        checkManagerRole();
 
         QRModelDTO savedQRModel = qrModelService.addQRModel(qrModelDTO);
 
@@ -26,6 +27,7 @@ public class QRModelApiDelegate implements QrmodelsApiDelegate {
 
     @Override
     public ResponseEntity<Void> deleteQRModel(Long qrmodelId) {
+        checkManagerRole();
 
         qrModelService.deleteQRModel(qrmodelId);
         return ResponseEntity.ok().build();
@@ -33,6 +35,7 @@ public class QRModelApiDelegate implements QrmodelsApiDelegate {
 
     @Override
     public ResponseEntity<List<QRModelDTO>> getAllQRModels() {
+        checkEmployeeRole();
 
         List<QRModelDTO> allModels = qrModelService.getAllQRModels();
 
@@ -41,6 +44,7 @@ public class QRModelApiDelegate implements QrmodelsApiDelegate {
 
     @Override
     public ResponseEntity<QRModelDTO> getQRModelById(Long qrmodelId) {
+        checkEmployeeRole();
 
         QRModelDTO qrModelDTO = qrModelService.getQRModelById(qrmodelId);
 
@@ -49,6 +53,7 @@ public class QRModelApiDelegate implements QrmodelsApiDelegate {
 
     @Override
     public ResponseEntity<QRModelDTO> updateQRModel(Long qrmodelId, QRModelDTO qrModelDTO) {
+        checkManagerRole();
 
         QRModelDTO updatedQRModel = qrModelService.updateQRModelDTO(qrmodelId, qrModelDTO);
 
