@@ -1,12 +1,10 @@
 package cz.vse.java.ploa00.bpbackend.entity.product;
-
 import cz.vse.java.ploa00.bpbackend.entity.recipe.ProductIngredient;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.List;
