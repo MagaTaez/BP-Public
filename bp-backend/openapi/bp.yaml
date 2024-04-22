@@ -2,15 +2,15 @@ openapi: 3.0.3
 info:
   title: BP - ARTEM API
   description: BP - ARTEM API
-  termsOfService: http://bp-inventory-manager.io/terms/
+  termsOfService: https://bp-inventory-manager.io/terms/
   contact:
     email: apiteam@bp-inventory-manager.io
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: https://api.bp-inventory-manager.io/v1
+  - url: https://bp-api.pfalink.com/v1
 tags:
   - name: ingredients
     description: API related to ingredients
