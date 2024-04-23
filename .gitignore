@@ -48,3 +48,6 @@ Thumbs.db
 
 # Open API
 generated-java
+
+# prod properties
+/application-production.properties
