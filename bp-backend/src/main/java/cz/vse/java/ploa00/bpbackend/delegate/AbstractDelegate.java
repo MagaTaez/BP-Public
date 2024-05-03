@@ -20,13 +20,17 @@ public abstract class AbstractDelegate {
     private String getAccessToken() {
         String authorization = nativeWebRequest.getHeader("Authorization");
 
-        String[] parts = authorization.split(" ");
+        if (authorization == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User is not authorized");
+        } else {
+            String[] parts = authorization.split(" ");
 
-        return parts[1];
+            return parts[1];
+        }
     }
 
     private void checkRole(String role) {
-       String accessToken =  getAccessToken();
+       String accessToken = getAccessToken();
 
        Map<String, Object> tokenDetails = tokenValidationService.getTokenDetails(accessToken);
 
