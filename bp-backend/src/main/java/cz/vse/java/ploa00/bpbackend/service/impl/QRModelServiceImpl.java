@@ -120,11 +120,7 @@ public class QRModelServiceImpl implements QRModelService {
 
         if (zScore < 0.5) {
             qrModel.setOrderQuantity(BigDecimal.valueOf(eoq));
-            BigDecimal reorderPoint = qrModelCalc.calculateReorderPoint(
-                    qrModel.getDemandLeadTime(),
-                    qrModel.getSafetyStock()
-            );
-            qrModel.setReorderPoint(reorderPoint);
+            qrModel.setReorderPoint(demandLeadTime);
             BigDecimal totalCost = qrModelCalc.calculateTotalCost(
                     qrModel.getOrderQuantity().doubleValue(),
                     qrModel.getReorderPoint(),
